@@ -21,7 +21,7 @@ export default class APP extends React.Component {
   }
 
   onSearchBarChanged(e) {
-    this.setState({ search: e.target.value, select: 1 });
+    this.setState({ search: e.target.value });
     chrome.storage.local.set({ search: e.target.value }, () => {});
   }
 

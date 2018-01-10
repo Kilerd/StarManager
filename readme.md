@@ -1,1 +1,1 @@
-star collector
+Star Manager

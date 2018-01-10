@@ -1,7 +1,7 @@
 {
-  "name": "star-collector",
+  "name": "star-manager",
   "version": "0.0.1",
-  "description": "a slight github star collector",
+  "description": "tiny Github star manager",
   "main": "index.js",
   "author": "Kilerd",
   "license": "MIT",

@@ -1,8 +1,8 @@
 {
     "manifest_version": 2,
-    "name": "Star Collector",
+    "name": "Star Manager",
     "version": "0.0.1",
-    "description": "a slight github star collector",
+    "description": "tiny Github star manager",
     "icons": {
         "128": "icon-128.png"
     },

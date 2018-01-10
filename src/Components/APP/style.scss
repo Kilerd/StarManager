@@ -1,0 +1,19 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 14px;
+}
+
+
+.app {
+    width: 300px;
+    height: 400px;
+    padding: .5rem;
+
+    overflow-y: scroll;
+    background-color: #FCFCFC;
+}

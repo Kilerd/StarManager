@@ -1,0 +1,21 @@
+{
+    "manifest_version": 2,
+    "name": "Star Collector",
+    "version": "0.0.1",
+    "description": "a slight github star collector",
+    "icons": {
+        "128": "icon-128.png"
+    },
+    "browser_action": {
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "scripts": [
+            "background.bundle.js"
+        ]
+    },
+    "permissions": [
+        "tabs", "*://*/*",
+        "storage"
+      ]
+}

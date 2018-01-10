@@ -1,0 +1,25 @@
+.repo-item{
+
+    padding: .65rem .75rem;
+    cursor: pointer;
+    border-bottom: 1px solid #e5e9ef;
+    transition: .1s;
+    outline: none;
+    margin-bottom: .2rem;
+    &:hover {
+        box-shadow: 0 3px 3px #e5e9ef;
+        background-color: #fff;
+    }
+    .name {
+        font-size: 1.1rem;
+        color: #0366d6;
+    }
+    .description {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        font-size: .9rem;
+        color: #586069;
+    }
+
+}

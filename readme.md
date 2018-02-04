@@ -1,1 +1,2 @@
-Star Manager
+# Star manager
+Tiny Github Star Manager

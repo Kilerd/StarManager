@@ -22,24 +22,25 @@ export default class RepoList extends React.Component {
         if (
           star.full_name.toLowerCase().includes(filter.toLowerCase())
           ||
-          star.description.toLowerCase().includes(filter.toLowerCase())
+          (star.description || '').toLowerCase().includes(filter.toLowerCase())
         ) {
           starShowed.push(star);
         }
       }
       return 0;
     });
-    const RepoItemList = starShowed.map((item) => {
-      const { id, description } = item;
-      return (
-        <RepoItem
-          key={id}
-          name={item.full_name}
-          description={description}
-          link={item.html_url}
-        />
-      );
-    });
+    const RepoItemList = starShowed.map(item => (
+      <RepoItem
+        key={item.id}
+        owner={item.owner.login}
+        name={item.name}
+        description={item.description}
+        link={item.html_url}
+        language={item.language}
+        star={item.stargazers_count}
+        license={item.license ? item.license.spdx_id || null : null}
+      />
+    ));
     return (
       <ul>
         {RepoItemList}

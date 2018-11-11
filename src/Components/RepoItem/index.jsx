@@ -14,10 +14,13 @@ export default class RepoItem extends React.Component {
     return (
       <div className="repo-item" onClick={this.onClick} onKeyPress={this.onClick} role="button" tabIndex="0">
         <div className="name">
-          {this.props.name}
+          {this.props.owner} / {this.props.name}
         </div>
         <div className="description">
           {this.props.description}
+        </div>
+        <div className="info">
+          {this.props.language} | {this.props.star} star {this.props.license ? `| ${this.props.license}` : ''}
         </div>
       </div>
     );

@@ -13,6 +13,9 @@
     .name {
         font-size: 1.1rem;
         color: #0366d6;
+        span {
+            padding: 3px 5px;
+        }
     }
     .description {
         white-space: nowrap;
@@ -20,6 +23,11 @@
         overflow: hidden;
         font-size: .9rem;
         color: #586069;
+        padding: .2rem 0;
+    }
+    .info {
+        color: #586069;
+        font-size: .8rem;
     }
 
 }

@@ -20,7 +20,7 @@ export default class RepoItem extends React.Component {
           {this.props.description}
         </div>
         <div className="info">
-          {this.props.language} | {this.props.star} star {this.props.license ? `| ${this.props.license}` : ''}
+          {this.props.language} | {this.props.star} stars {this.props.license ? `| ${this.props.license}` : ''}
         </div>
       </div>
     );

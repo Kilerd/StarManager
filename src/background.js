@@ -8,7 +8,6 @@ const storeStars = (starList) => {
       _res[item.id] = item;
       return _res;
     }, stars);
-    console.log(NewStars);
 
     chrome.storage.local.set({ stars: NewStars }, () => {});
   });
@@ -35,14 +34,12 @@ const fetchProcess = async () => {
     if (user === '') {
       return false;
     }
-    console.log('starting fetch star list');
     await fetchStarList(user, 1);
     return true;
   });
 };
 
 const handleUsername = async () => {
-  console.log('start');
   fetchProcess();
   setInterval(fetchProcess, 1000 * 60 * 30);
 };

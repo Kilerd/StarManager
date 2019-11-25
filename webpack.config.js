@@ -1,20 +1,20 @@
-const path = require('path')
-const webpack = require('webpack')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const path = require('path');
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
     popup: './src/popup.jsx',
-    background: './src/background.js'
+    background: './src/background.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].bundle.js'
+    filename: '[name].bundle.js',
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
   },
   module: {
     loaders: [
@@ -38,7 +38,7 @@ module.exports = {
       },
       {
         test: /\.(ico|eot|otf|webp|ttf|woff|woff2)(\?.*)?$/,
-        use: 'file-loader?limit=100000'
+        use: 'file-loader?limit=100000',
       }, {
         test: /\.(jpe?g|png|gif|svg)$/i,
         use: [
@@ -46,12 +46,12 @@ module.exports = {
             loader: 'img-loader',
             options: {
               enabled: true,
-              optipng: true
-            }
-          }
-        ]
-      }
-    ]
+              optipng: true,
+            },
+          },
+        ],
+      },
+    ],
   },
   plugins: [
     // create CSS file with all used styles
@@ -61,16 +61,16 @@ module.exports = {
       inject: true,
       chunks: ['popup'],
       filename: 'popup.html',
-      template: './src/popup.html'
+      template: './src/popup.html',
     }),
     // copy extension manifest and icons
     new CopyWebpackPlugin([
       {
-        from: './src/manifest.json'
+        from: './src/manifest.json',
       }, {
         context: './src',
-        from: 'icon-**'
-      }
-    ])
-  ]
-}
+        from: 'icon-**',
+      },
+    ]),
+  ],
+};

@@ -13,22 +13,40 @@ export default class RepoList extends React.Component {
     }
 
     const { stars, filter } = this.props;
-    const starShowed = [];
-    Object.keys(stars).map((item) => {
-      if (filter === '') {
-        starShowed.push(stars[item]);
-      } else {
-        const star = stars[item];
-        if (
-          star.full_name.toLowerCase().includes(filter.toLowerCase())
-          ||
-          (star.description || '').toLowerCase().includes(filter.toLowerCase())
-        ) {
-          starShowed.push(star);
-        }
-      }
-      return 0;
-    });
+    let starShowed = [];
+
+    if (filter === '') {
+      starShowed = Object.values(stars);
+    } else {
+      const keywords = filter
+        .split(' ')
+        .filter(keyword => keyword !== '');
+
+      const showedStarsMap = keywords.reduce((showedStars, keyword) => {
+        Object
+          .keys(showedStars)
+          .forEach((starName) => {
+            const star = showedStars[starName];
+
+            const isFullNameMatch = star.full_name.toLowerCase()
+              .includes(keyword);
+            const isDescriptionMatch = (star.description || '').toLowerCase()
+              .includes(keyword);
+            const isLinkMatch = (star.link || '').toLowerCase()
+              .includes(keyword);
+            const isLanguageMatch = (star.language || '').toLowerCase()
+              .includes(keyword);
+
+            if (!(isFullNameMatch || isDescriptionMatch || isLanguageMatch || isLinkMatch)) {
+              // eslint-disable-next-line no-param-reassign
+              delete showedStars[starName];
+            }
+          });
+        return showedStars;
+      }, Object.assign({}, stars));
+      starShowed = Object.values(showedStarsMap);
+    }
+
     const RepoItemList = starShowed.map(item => (
       <RepoItem
         key={item.id}

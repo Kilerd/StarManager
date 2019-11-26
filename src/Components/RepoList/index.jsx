@@ -36,11 +36,12 @@ export default function RepoList() {
             .includes(keyword);
           const isLinkMatch = (repoDetail.url || '').toLowerCase()
             .includes(keyword);
-
           const language = (repoDetail.language || {}).name || '';
           const isLanguageMatch = language.toLowerCase().includes(keyword);
 
-          if (!(isFullNameMatch || isDescriptionMatch || isLanguageMatch || isLinkMatch)) {
+          const isTopicMatch = repoDetail.repositoryTopics.nodes.some(topic => topic.topic.name.toLowerCase().includes(keyword));
+
+          if (!(isFullNameMatch || isDescriptionMatch || isLanguageMatch || isLinkMatch || isTopicMatch)) {
             // eslint-disable-next-line no-param-reassign
             delete reducedRepoMap[repoId];
           }

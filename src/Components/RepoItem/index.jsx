@@ -8,6 +8,10 @@ export default function RepoItem(props) {
     window.open(repo.url, '_blank')
       .focus();
   }
+  const language = repo.primaryLanguage ? (
+    <span style={{ color: repo.primaryLanguage.color }}>{repo.primaryLanguage.name}</span>) : '';
+
+  const license = repo.licenseInfo ? (<span>{repo.licenseInfo.name}</span>) : '';
   return (
     <div className="repo-item" onClick={onClick} onKeyPress={onClick} role="button" tabIndex="0">
       <div className="name">
@@ -17,7 +21,9 @@ export default function RepoItem(props) {
         {repo.description}
       </div>
       <div className="info">
-        TODO Language | TODO stars | LICENSE
+        {language}
+        <span>{repo.stargazers.totalCount} stars</span>
+        {license}
       </div>
     </div>
   );

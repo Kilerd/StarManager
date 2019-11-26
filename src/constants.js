@@ -23,7 +23,11 @@ export const QUERY = ` query getUserStarredRepos($user: String!, $endcursor: Str
           }
         }
         primaryLanguage {
+          color
           name
+        }
+        stargazers {
+          totalCount
         }
         languages(first:100) {
           nodes {

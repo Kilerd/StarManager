@@ -36,10 +36,9 @@ export default function RepoList() {
             .includes(keyword);
           const isLinkMatch = (repoDetail.url || '').toLowerCase()
             .includes(keyword);
-          // TODO
-          const isLanguageMatch = false;
-          // const isLanguageMatch = (repoDetail.language || '').toLowerCase()
-          //   .includes(keyword);
+
+          const language = (repoDetail.language || {}).name || '';
+          const isLanguageMatch = language.toLowerCase().includes(keyword);
 
           if (!(isFullNameMatch || isDescriptionMatch || isLanguageMatch || isLinkMatch)) {
             // eslint-disable-next-line no-param-reassign

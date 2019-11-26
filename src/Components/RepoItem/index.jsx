@@ -1,28 +1,29 @@
 import React from 'react';
 import './style.scss';
 
-export default class RepoItem extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onClick = this.onClick.bind(this);
-  }
+export default function RepoItem(props) {
+  const { repo } = props;
 
-  onClick() {
-    window.open(this.props.link, '_blank').focus();
+  function onClick() {
+    window.open(repo.url, '_blank')
+      .focus();
   }
-  render() {
-    return (
-      <div className="repo-item" onClick={this.onClick} onKeyPress={this.onClick} role="button" tabIndex="0">
-        <div className="name">
-          {this.props.owner} / {this.props.name}
-        </div>
-        <div className="description">
-          {this.props.description}
-        </div>
-        <div className="info">
-          {this.props.language} | {this.props.star} stars {this.props.license ? `| ${this.props.license}` : ''}
-        </div>
+  const language = repo.primaryLanguage ? (
+    <span style={{ color: repo.primaryLanguage.color }}>{repo.primaryLanguage.name}</span>) : '';
+  const license = repo.licenseInfo ? (<span>{repo.licenseInfo.name}</span>) : '';
+  return (
+    <div className="repo-item" onClick={onClick} onKeyPress={onClick} role="button" tabIndex="0">
+      <div className="name">
+        {repo.nameWithOwner}
       </div>
-    );
-  }
+      <div className="description">
+        {repo.description}
+      </div>
+      <div className="info">
+        {language}
+        <span>{repo.stargazers.totalCount} stars</span>
+        {license}
+      </div>
+    </div>
+  );
 }

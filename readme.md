@@ -1,4 +1,4 @@
-# Star manager
+# Star manager 0.0.4
 超轻量级的 GitHub Star 管理插件
 
 ## 使用方法
@@ -17,4 +17,10 @@
 - repo 的描述
 - repo 在 GitHub 标记的语言
 - repo 在 GitHub 登记的主页
-- repo 的 topics
+- repo 的 关键字
+
+
+## TODO
+- [ ] 搜索框的方向键支持
+- [ ] options 页面的日志支持和界面优化
+- [ ] 英文说明

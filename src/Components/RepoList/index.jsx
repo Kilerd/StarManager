@@ -1,68 +1,63 @@
 import React from 'react';
 import './style.scss';
 import RepoItem from '../RepoItem';
+import { Store } from '../../store';
 
-export default class RepoList extends React.Component {
-  render() {
-    if (Object.keys(this.props.stars).length === 0 && this.props.stars.constructor === Object) {
-      return (
-        <div className="blank">
-          Please input your github username and wait for half hour or restart chrome compeletly.
-        </div>
-      );
-    }
+export default function RepoList() {
+  const { state } = React.useContext(Store);
 
-    const { stars, filter } = this.props;
-    let starShowed = [];
-
-    if (filter === '') {
-      starShowed = Object.values(stars);
-    } else {
-      const keywords = filter
-        .split(' ')
-        .filter(keyword => keyword !== '');
-
-      const showedStarsMap = keywords.reduce((showedStars, keyword) => {
-        Object
-          .keys(showedStars)
-          .forEach((starName) => {
-            const star = showedStars[starName];
-
-            const isFullNameMatch = star.full_name.toLowerCase()
-              .includes(keyword);
-            const isDescriptionMatch = (star.description || '').toLowerCase()
-              .includes(keyword);
-            const isLinkMatch = (star.link || '').toLowerCase()
-              .includes(keyword);
-            const isLanguageMatch = (star.language || '').toLowerCase()
-              .includes(keyword);
-
-            if (!(isFullNameMatch || isDescriptionMatch || isLanguageMatch || isLinkMatch)) {
-              // eslint-disable-next-line no-param-reassign
-              delete showedStars[starName];
-            }
-          });
-        return showedStars;
-      }, Object.assign({}, stars));
-      starShowed = Object.values(showedStarsMap);
-    }
-
-    const RepoItemList = starShowed.map(item => (
-      <RepoItem
-        key={item.id}
-        owner={item.owner.login}
-        name={item.name}
-        description={item.description}
-        link={item.html_url}
-        language={item.language}
-        star={item.stargazers_count}
-        license={item.license ? item.license.spdx_id || null : null}
-      />
-    ));
+  const { search: filter, repos } = state;
+  if (state.user === '' || state === '') {
     return (
-      <ul>
-        {RepoItemList}
-      </ul>
+      <div className="blank">
+        <a href="/options.html">please go to the options page to finish setup.</a>
+      </div>
     );
   }
+
+  let filteredRepos = [];
+
+  if (filter === '') {
+    filteredRepos = Object.values(repos);
+  } else {
+    const keywords = filter
+      .split(' ')
+      .filter(keyword => keyword !== '');
+
+    const finalFilterRepo = keywords.reduce((reducedRepoMap, keyword) => {
+      Object
+        .keys(reducedRepoMap)
+        .forEach((repoId) => {
+          const repoDetail = reducedRepoMap[repoId];
+
+          const isFullNameMatch = repoDetail.nameWithOwner.toLowerCase()
+            .includes(keyword);
+          const isDescriptionMatch = (repoDetail.description || '').toLowerCase()
+            .includes(keyword);
+          const isLinkMatch = (repoDetail.url || '').toLowerCase()
+            .includes(keyword);
+          // TODO
+          const isLanguageMatch = false;
+          // const isLanguageMatch = (repoDetail.language || '').toLowerCase()
+          //   .includes(keyword);
+
+          if (!(isFullNameMatch || isDescriptionMatch || isLanguageMatch || isLinkMatch)) {
+            // eslint-disable-next-line no-param-reassign
+            delete reducedRepoMap[repoId];
+          }
+        });
+      return reducedRepoMap;
+    }, Object.assign({}, repos));
+
+    filteredRepos = Object.values(finalFilterRepo);
+  }
+
+  const RepoItemList = filteredRepos.map(item => (
+    <RepoItem key={item.id} repo={item} />
+  ));
+  return (
+    <ul>
+      {RepoItemList}
+    </ul>
+  );
 }

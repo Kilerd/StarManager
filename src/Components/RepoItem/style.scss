@@ -28,6 +28,11 @@
     .info {
         color: #586069;
         font-size: .8rem;
+        span:not(:first-child) {
+            &:before {
+                content: " | "
+            }
+        }
     }
 
 }

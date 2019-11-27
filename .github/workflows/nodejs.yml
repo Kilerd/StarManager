@@ -7,27 +7,21 @@ on:
 
 jobs:
   build:
-
+    name: Test
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [8.x, 10.x, 12.x]
-
     steps:
       - uses: actions/checkout@v1
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - uses: borales/actions-yarn@v2.0.0
         with:
-          node-version: ${{ matrix.node-version }}
-      - name: npm install, build, and test
-        run: |
-          npm ci
-          npm run build --if-present
-          npm run zip
-          ls
-        env:
-          CI: true
+          cmd: install # will run `yarn install` command
+      - name: build dist
+        uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: build # will run `yarn build` command
+      - name: zip dist
+        uses: borales/actions-yarn@v2.0.0
+          with:
+            cmd: zip
       - name: upload
         uses: trmcnvn/chrome-addon@v1
         with:

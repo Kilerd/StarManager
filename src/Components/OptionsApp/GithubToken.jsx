@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Store } from '../../store';
+import Logs from './Logs';
 
 
 const TwoColumn = styled.div`
@@ -37,6 +38,10 @@ export default function GithubToken() {
       return;
     }
     dispatch({
+      type: 'LOG',
+      data: `[${new Date().toISOString()}] modify username and token`,
+    });
+    dispatch({
       type: 'UPDATE_USERNAME_AND_TOKEN',
       data: {
         user: realEditUsername,
@@ -65,13 +70,11 @@ export default function GithubToken() {
         <div>
           NOTICE: the access token <b>DO NOT</b> need <b>ANY</b> extra scopes.
         </div>
-
-        <h2>Log</h2>
-
+        <Logs />
       </div>
 
       <div>
-        <h2>Repos</h2>
+        <h2>Repos ({Object.keys(state.repos).length})</h2>
         {Object.values(state.repos)
           .map(repo => <div key={repo.id}>{repo.nameWithOwner}</div>)}
       </div>

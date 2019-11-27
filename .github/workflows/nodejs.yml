@@ -20,8 +20,8 @@ jobs:
           cmd: build # will run `yarn build` command
       - name: zip dist
         uses: borales/actions-yarn@v2.0.0
-          with:
-            cmd: zip
+        with:
+          cmd: zip
       - name: upload
         uses: trmcnvn/chrome-addon@v1
         with:

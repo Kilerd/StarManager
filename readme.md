@@ -1,10 +1,10 @@
-# Star manager 0.0.4
+# Star manager 0.0.5
 超轻量级的 GitHub Star 管理插件
 
 ## 使用方法
 1. 进入 Chrome 插件市场[下载插件](https://chrome.google.com/webstore/detail/star-manager/klajgkhhnnipjkilfgkkjofidahjfobh)
-2. 进入 [chrome://extensions/shortcuts](chrome://extensions/shortcuts) 为 Star Manager 设置 popup 的快捷键
-3. 打开 [插件的设置界面](chrome-extension://klajgkhhnnipjkilfgkkjofidahjfobh/options.html)，输入用户名和 Github Access Token，提交修改
+2. 进入 `chrome://extensions/shortcuts` 为 Star Manager 设置 popup 的快捷键
+3. 打开 插件的设置界面(`chrome-extension://klajgkhhnnipjkilfgkkjofidahjfobh/options.html`)，输入用户名和 Github Access Token，提交修改
 4. 等待插件拉取用户 star 即可开始使用
 
 ## 关键字搜索
@@ -22,5 +22,9 @@
 
 ## TODO
 - [ ] 搜索框的方向键支持
-- [ ] options 页面的日志支持和界面优化
+- [*] options 页面的日志支持和界面优化
 - [ ] 英文说明
+
+## Changelog
+### 0.0.5
+- 新增了 `options.html` 页面的友好提示和日志支持

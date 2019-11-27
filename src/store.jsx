@@ -7,12 +7,17 @@ export const initialStore = {
   user: '',
   token: '',
   repos: {},
+  logs: [],
 };
 
 export const Store = React.createContext(initialStore);
 
 
 export const updateUserStarredRepo = async (data, dispatch) => {
+  dispatch({
+    type: 'LOG',
+    data: `[${new Date().toISOString()}] initialize graphql client for fetching user's repo data`,
+  });
   const graphQLClient = new GraphQLClient(GITHUB_GRAPHQL_API_ENDPOINT, {
     headers: {
       authorization: `token ${data.token}`,
@@ -23,28 +28,44 @@ export const updateUserStarredRepo = async (data, dispatch) => {
     hasNextPage: true,
   };
   while (pageInfo.hasNextPage) {
-    const fetchedRepos = await graphQLClient.request(QUERY, {
-      user: data.user,
-      endcursor: pageInfo.endCursor,
-    });
-    const { pageInfo: newPageInfo, nodes: repos } = fetchedRepos.user.starredRepositories;
     dispatch({
-      type: 'APPEND_REPOS',
-      data: repos,
+      type: 'LOG',
+      data: `[${new Date().toISOString()}] fetching user's paged repo data, user=${data.user}, offsetCursor=${pageInfo.endCursor}`,
     });
-    pageInfo.endCursor = newPageInfo.endCursor;
-    pageInfo.hasNextPage = newPageInfo.hasNextPage;
+    try {
+      const fetchedRepos = await graphQLClient.request(QUERY, {
+        user: data.user,
+        endcursor: pageInfo.endCursor,
+      });
+      const { pageInfo: newPageInfo, nodes: repos } = fetchedRepos.user.starredRepositories;
+      dispatch({
+        type: 'APPEND_REPOS',
+        data: repos,
+      });
+      pageInfo.endCursor = newPageInfo.endCursor;
+      pageInfo.hasNextPage = newPageInfo.hasNextPage;
+      dispatch({
+        type: 'LOG',
+        data: `[${new Date().toISOString()}] fetching successfully, dataCount=${repos.length}, hasNextPage=${pageInfo.hasNextPage}`,
+      });
+    } catch (e) {
+      dispatch({
+        type: 'LOG',
+        data: `[${new Date().toISOString()}] fetching Error: ${e}`,
+      });
+      pageInfo.hasNextPage = false;
+    }
   }
+  dispatch({
+    type: 'LOG',
+    data: `[${new Date().toISOString()}] fetching end`,
+  });
 };
 
 const dispatchMiddleware = dispath => (action) => {
   switch (action.type) {
     case 'UPDATE_USERNAME_AND_TOKEN':
-      // TODO
-      console.log('middle ware active', action);
-
       updateUserStarredRepo(action.data, dispath);
-
       return dispath(action);
     default:
       return dispath(action);
@@ -63,7 +84,13 @@ function reducer(state, action) {
 
     case 'INITIAL_DATA_FROM_CHROME':
       return action.data;
-
+    case 'LOG':
+      const { logs } = state;
+      logs.push(action.data);
+      return {
+        ...state,
+        logs
+      };
     case 'UPDATE_USERNAME_AND_TOKEN':
       const { user, token } = action.data;
       chrome.storage.local.set({
@@ -110,6 +137,10 @@ export function StoreProvider(props) {
       dispatch({
         type: 'INITIAL_DATA_FROM_CHROME',
         data: result,
+      });
+      dispatch({
+        type: 'LOG',
+        data: `[${new Date().toISOString()}] fetch chrome local storage`,
       });
     });
   }, []);

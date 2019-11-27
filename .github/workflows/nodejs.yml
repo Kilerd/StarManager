@@ -1,0 +1,40 @@
+name: Chrome Extion Upload
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [8.x, 10.x, 12.x]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm install, build, and test
+        run: |
+          npm ci
+          npm run build --if-present
+          npm run zip
+          ls
+        env:
+          CI: true
+      - name: upload
+        uses: trmcnvn/chrome-addon@v1
+        with:
+          # extension is only necessary when updating an existing addon,
+          # omitting it will create a new addon
+          extension: klajgkhhnnipjkilfgkkjofidahjfobh
+          zip: dist.zip
+          client-id: ${{ secrets.CHROME_CLIENT_ID }}
+          client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
+          refresh-token: ${{ secrets.CHROME_REFRESH_TOKEN }}

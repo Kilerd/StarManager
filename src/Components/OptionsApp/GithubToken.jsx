@@ -1,6 +1,13 @@
 import React from 'react';
-import { Store, updateUserStarredRepo } from '../../store';
+import styled from 'styled-components';
+import { Store } from '../../store';
+import Logs from './Logs';
 
+
+const TwoColumn = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
 export default function GithubToken() {
   const { state, dispatch } = React.useContext(Store);
@@ -25,19 +32,15 @@ export default function GithubToken() {
     setTokenEdit(true);
   }
 
-  React.useEffect(() => {
-    const a = async () => {
-      console.log('doing fetch data');
-    };
-  }, [realEditUsername, realEditToken]);
-
   function submit() {
-    console.log(realEditUsername, realEditToken);
-
     if (realEditUsername === '' || realEditToken === '') {
       setErrorMsg('Username and token must be set');
       return;
     }
+    dispatch({
+      type: 'LOG',
+      data: `[${new Date().toISOString()}] modify username and token`,
+    });
     dispatch({
       type: 'UPDATE_USERNAME_AND_TOKEN',
       data: {
@@ -48,22 +51,33 @@ export default function GithubToken() {
   }
 
   return (
-    <div>
-      <div color="red">{errorMsg}</div>
+    <TwoColumn>
       <div>
-        Username: <input type="text" value={realEditUsername} onChange={handleUserChange} />
+        <h1>Star Manager</h1>
+        <h2>Setting</h2>
+        <div color="red">{errorMsg}</div>
+        <div>
+          Username: <input type="text" value={realEditUsername} onChange={handleUserChange}/>
+        </div>
+        <div>
+          Github Token: <input type="password" value={realEditToken} onChange={handleTokenChange}/>
+        </div>
+        <button onClick={submit}>Submit</button>
+        <h3>help</h3>
+        <div>
+          Github Token can be created at <a href="https://github.com/settings/tokens/new">[Github]New personal access token</a>
+        </div>
+        <div>
+          NOTICE: the access token <b>DO NOT</b> need <b>ANY</b> extra scopes.
+        </div>
+        <Logs />
       </div>
-      <div>
-        Github Token: <input type="password" value={realEditToken} onChange={handleTokenChange} />
-      </div>
-      <button onClick={submit}>Submit</button>
-      <div>help</div>
 
       <div>
-        repos
+        <h2>Repos ({Object.keys(state.repos).length})</h2>
         {Object.values(state.repos)
           .map(repo => <div key={repo.id}>{repo.nameWithOwner}</div>)}
       </div>
-    </div>
+    </TwoColumn>
   );
 }

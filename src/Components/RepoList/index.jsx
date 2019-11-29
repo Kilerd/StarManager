@@ -7,7 +7,7 @@ export default function RepoList() {
   const { state } = React.useContext(Store);
 
   const { search: filter, repos } = state;
-  if (state.user === '' || state === '') {
+  if (state.user === '' || state.token === '') {
     return (
       <div className="blank">
         <a href="/options.html">please go to the options page to finish setup.</a>

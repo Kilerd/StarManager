@@ -1,4 +1,4 @@
-# Star manager 0.0.5
+# Star manager 0.0.6
 超轻量级的 GitHub Star 管理插件
 
 ## 使用方法
@@ -22,9 +22,11 @@
 
 ## TODO
 - [ ] 搜索框的方向键支持
-- [*] options 页面的日志支持和界面优化
+- [x] options 页面的日志支持和界面优化
 - [ ] 英文说明
 
 ## Changelog
+### 0.0.6
+ - 修复了旧版本更新上来（只存在`username` 没有 `token`）时，不显示设置 tips 的问题
 ### 0.0.5
-- 新增了 `options.html` 页面的友好提示和日志支持
+ - 新增了 `options.html` 页面的友好提示和日志支持

@@ -1,4 +1,4 @@
-# Star manager 0.0.6
+# Star manager 0.0.7
 超轻量级的 GitHub Star 管理插件
 
 ## 使用方法
@@ -26,6 +26,8 @@
 - [ ] 英文说明
 
 ## Changelog
+### 0.0.7
+ - 修复了 popup 页面跳转至 options 页面时没有采用新窗口打开的方式
 ### 0.0.6
  - 修复了旧版本更新上来（只存在`username` 没有 `token`）时，不显示设置 tips 的问题
 ### 0.0.5

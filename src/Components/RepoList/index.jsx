@@ -10,7 +10,7 @@ export default function RepoList() {
   if (state.user === '' || state.token === '') {
     return (
       <div className="blank">
-        <a href="/options.html">please go to the options page to finish setup.</a>
+        <a href="/options.html" target="_blank">please go to the options page to finish setup.</a>
       </div>
     );
   }

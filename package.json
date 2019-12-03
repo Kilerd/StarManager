@@ -1,6 +1,6 @@
 {
   "name": "star-manager",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "tiny Github star manager",
   "main": "index.js",
   "author": "Kilerd",
